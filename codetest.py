@@ -15,10 +15,9 @@ class Livros:
 
     def retornando_resultados(self):
         if self.disponibilidade:
-            return f"O livro {self.livro} está disponível.", f"Gênero: {self.genero}", f"Autor: {self.autor}"
+            return f"O livro {self.livro} está disponível.", f"Gênero: {self.genero}", f"Autor: {self.autor}"
         else:
-            return f"O livro {self.livro} não está disponível."
-
+            return f"O livro {self.livro} não está disponível."
 
 class Usuario:
     def __init__(self, nome, Id):
@@ -31,10 +30,9 @@ class Usuario:
             self.historico.append(livro)
         return [str(livro) for livro in self.historico]
 
-
     def retornando_resultados_usuario(self):
         livros_str = ", ".join(livro.livro for livro in self.historico)
-        return f"O usuário {self.nome} de ID {self.Id}",f"guardou os seguintes livros: {livros_str}" 
+        return f"O usuário {self.nome} de ID {self.Id} guardou os seguintes livros: {livros_str}"
 
     def calcular_similaridade(self, livroa, livrob):
         similaridade = 0
@@ -56,21 +54,23 @@ class Usuario:
             recomendacao_livro.append((similaridade, livro.livro))
         return recomendacao_livro
 
-heap = []
-
+# Criação de livros
 livros_escolhidos_1 = Livros("O Senhor dos Aneis", "Fantasia", "J. R. R. Tolkien") 
 livros_escolhidos_2 = Livros("Harry Potter", "Fantasia", "J. K. Rowling")
-livros_escolhidos_3 = Livros("O Pequeno Príncipe", "Infantil", "Antoine de Saint-Exupéry")
+livros_escolhidos_3 = Livros("O Pequeno Príncipe", "Infantil", "Antoine de Saint-Exupéry")
 
-usuarios_1 = Usuario("João", 1)
-usuarios_2 = Usuario("Maria", 2)
-usuarios_3 = Usuario("Pedro", 3)
+# Criação de usuário
+usuarios_1 = Usuario("João", 1)
 
+# Adicionando livros ao histórico do usuário
 usuarios_1.colocando_no_historico(livros_escolhidos_1, livros_escolhidos_2, livros_escolhidos_3)
 
-print(livros_escolhidos_1.retornando_resultados(),livros_escolhidos_2.retornando_resultados(), livros_escolhidos_3.retornando_resultados())
+# Exibindo resultados dos livros e histórico
+print(livros_escolhidos_1.retornando_resultados(), livros_escolhidos_2.retornando_resultados(), livros_escolhidos_3.retornando_resultados())
 print(usuarios_1.retornando_resultados_usuario())
 
+# Recomendação com MinHeap
+heap = []
 usuarios_1.recomendacao(heap, livros_escolhidos_1, [livros_escolhidos_2, livros_escolhidos_3])
 verdadeiras_recomendacoes = usuarios_1.retornando_resultados_recomendacao(heap)
 print(f"Recomendações com base no livro escolhido: {livros_escolhidos_1.livro}")
